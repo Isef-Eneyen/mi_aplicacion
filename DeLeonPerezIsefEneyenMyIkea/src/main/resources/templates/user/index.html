@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/header.css">
+    <title>Usuarios</title>
+    <style>
+        .tabla {
+            display: flex;
+            justify-content: center;
+            border-collapse: collapse;
+            margin: 20px 50px 0 50px;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        tr {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px;
+            text-align: left;
+            flex-basis: 20%;
+        }
+
+        td {
+            padding: 10px;
+            flex-basis: 20%;
+        }
+
+        td img {
+            height: 80px;
+        }
+
+        .products:hover {
+            background-color: #dff9fb;
+        }
+
+        .delete {
+            display: inline-block;
+            width: 30%;
+            padding: 10px;
+            text-decoration: none;
+            color: red;
+            background-color: #fff;
+            border: 2px solid red;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete:hover {
+            background-color: red;
+            border: 2px solid red;
+            color: #fff;
+        }
+
+        h1 {
+            margin-left: 50px;
+        }
+    </style>
+</head>
+
+<body>
+<div th:replace="~{fragments/header::header}"></div>
+
+<h1>Usuarios</h1>
+
+<div class="tabla">
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>roles</th>
+            <th>Acciones</th>
+        </tr>
+
+        <tr class="products" th:each="user : ${users}">
+            <td><p th:text="${user.getUserId()}"></p></td>
+            <td><p th:text="${user.getUserName()}"></p></td>
+            <td><p th:text="${user.getEmail()}"></p></td>
+            <td>
+                <p th:each="role : ${user.getRoles()}" th:text="${role.role}"></p>
+            </td>
+            <td>
+                <a class="delete" th:href="@{/usuarios/eliminar/{id}(id=${user.userId})}">Eliminar</a>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/css/header.css">
+        <title>Pedidos</title>
+
+        <style>
+            .tabla {
+                display: flex;
+                justify-content: center;
+                border-collapse: collapse;
+                margin: 20px 50px 0 50px;
+            }
+
+            table {
+                width: 100%;
+            }
+
+            tr {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                border-bottom: 1px solid #ddd;
+                padding: 10px 0;
+            }
+
+            tr:first-child
+            {
+                background-color: #3498db;
+            }
+
+            th {
+                background-color: #3498db;
+                color: #fff;
+                padding: 10px;
+                text-align: left;
+                flex-basis: 20%;
+            }
+
+            td {
+                padding: 10px;
+                flex-basis: 20%;
+            }
+
+            .products:hover {
+                background-color: #dff9fb;
+            }
+
+            .details {
+                display: inline-block;
+                width: 30%;
+                padding: 10px;
+                text-decoration: none;
+                color: #4caf50;
+                background-color: #fff;
+                border: 2px solid #4caf50;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            .details:hover {
+                background-color: #45a049;
+                border: 2px solid #45a049;
+                color: #fff;
+            }
+
+            h1 {
+                margin-left: 50px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div th:replace="~{fragments/header::header}"></div>
+
+        <h1>Pedidos realizados</h1>
+
+        <div class="tabla">
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th>Fecha</th>
+                    <th>Precio total</th>
+                    <th>Acciones</th>
+                </tr>
+
+                <tr class="products" th:each="pedido : ${pedidos}">
+                    <td><p th:text="${pedido.id}"></p></td>
+                    <td><p th:text="${pedido.fechaPedido}"></p></td>
+                    <td><p th:text="${pedido.precioTotal}"></p></td>
+                    <td> <a class="details" th:href="@{/pedidos/details/{id}(id=${pedido.id})}">Detalles</a></td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

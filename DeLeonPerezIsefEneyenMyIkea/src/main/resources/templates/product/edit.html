@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/css/header.css">
+        <title>Editar Producto</title>
+        <style>
+            h1 {
+                text-align: center;
+                color: #343a40;
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+                width: 50%;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            label {
+                margin-top: 10px;
+                color: #495057;
+            }
+
+            input, select {
+                margin-top: 5px;
+                padding: 10px;
+                border: 1px solid #ced4da;
+                border-radius: 4px;
+            }
+
+            button {
+                margin-top: 10px;
+                padding: 10px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+            .file-input-label {
+                display: inline-block;
+                padding: 8px 12px;
+                background-color: #3498db;
+                color: #fff;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            .file-input {
+                display: none;
+            }
+
+            .file-name {
+                margin-left: 10px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div th:replace="~{fragments/header::header}"></div>
+
+        <h1>Editar Producto</h1>
+
+        <form action="#" th:action="@{/productos/editar}" method="post" th:object="${producto}" onsubmit="return validarFormulario()" enctype="multipart/form-data">
+            <input id="id" type="hidden" th:field="*{id}" />
+
+            <label for="productName">Nombre del Producto:</label>
+            <input type="text" id="productName" placeholder="Producto..." name="productName" maxlength="512" required th:field="*{productName}" th:value="*{productName}" />
+
+            <label for="productPrice">Precio del Producto:</label>
+            <input type="number" placeholder="0" id="productPrice" name="productPrice" min="0" step="0.01" th:field="*{productPrice}" th:value="*{productPrice}" />
+
+            <label for="image" class="file-input-label">Haz clic aquí para subir una imagen</label>
+            <input type="file" class="file-input" id="image" name="image" accept="image/*" onchange="nombreInputFile(this)"/>
+            <input th:field="${producto.productPicture}" th:value="algo" type="text" hidden/>
+            <span class="file-name">Ningún archivo seleccionado</span>
+
+            <label for="idMunicipio">Municipio:</label>
+            <select id="idMunicipio" name="idMunicipio">
+                <option value="0"><-Seleccione Municipio-></option>
+                <option th:each="municipio : ${municipios}" th:value="${municipio.id}" th:text="${municipio.nombre}" th:attr="data-provincia=${municipio.idProvincia.id}"></option>
+            </select>
+
+            <label for="idProvincia">Provincia:</label>
+            <select id="idProvincia">
+                <option value="0"><-Seleccione Provincia-></option>
+                <option th:each="provincia : ${provincias}" th:value="${provincia.id}" th:text="${provincia.nombre}"></option>
+            </select>
+
+            <label for="productStock">Stock del producto:</label>
+            <input type="number" placeholder="0" id="productStock" name="productStock" required min="0" th:field="*{productStock}" th:value="*{productStock}" />
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+
+        <script>
+            var idMunicipio = document.getElementById("idMunicipio")
+            var idProvincia = document.getElementById("idProvincia");
+            function validarFormulario() {
+                if (idMunicipio.value === "0" || idProvincia.value === "0") {
+                    alert("Seleccione un Municipio y una Provincia antes de enviar el formulario.");
+                    return false;
+                }
+                return true;
+            }
+
+            idMunicipio.addEventListener("change", function(){
+                municipiosProvincias();
+            })
+            idProvincia.addEventListener("change", function(){
+                provinciasMunicipios();
+            })
+            function municipiosProvincias(){
+                var option = idMunicipio.options[idMunicipio.selectedIndex];
+                idProvincia.value = option.getAttribute("data-provincia")
+            }
+
+            function provinciasMunicipios(){
+                var option = idProvincia.value;
+                idMunicipio.value = 0;
+                [...idMunicipio.options].map(x => {
+                    if(idProvincia.value !==0){
+                        if(x.getAttribute("data-provincia") != null){
+                            if(x.getAttribute("data-provincia") === option){
+                                x.style.display = "block";
+                            }else{
+                                x.style.display = "none"
+                            }
+                        }else{
+                            x.style.display = "block";
+                        }
+                    }else{
+                        x.style.display = "block";
+                    }
+                })
+            }
+        </script>
+
+        <script>
+            function nombreInputFile(input) {
+                const fileNameSpan = input.parentElement.querySelector('.file-name');
+                if (input.files.length > 0) {
+                    fileNameSpan.textContent = input.files[0].name;
+                } else {
+                    fileNameSpan.textContent = 'Ningún archivo seleccionado';
+                }
+            }
+        </script>
+    </body>
+</html>

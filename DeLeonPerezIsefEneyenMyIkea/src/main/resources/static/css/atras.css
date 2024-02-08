@@ -1,0 +1,18 @@
+.atras
+{
+    display: inline-block;
+    margin-left: 50px;
+    padding: 10px;
+    text-decoration: none;
+    color: #8c8c8c;
+    background-color: #fff;
+    border: 2px solid #8c8c8c;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.atras:hover
+{
+    background-color: #8c8c8c;
+    color:white;
+}

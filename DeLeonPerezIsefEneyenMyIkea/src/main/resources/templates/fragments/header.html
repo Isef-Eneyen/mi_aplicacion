@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+        <header th:fragment="header">
+            <nav>
+                <a th:href="@{/}">MyIkea</a>
+                <a th:href="@{/productos}" sec:authorize="isAuthenticated()">Muebles</a>
+                <a th:href="@{/pedidos}" sec:authorize="hasRole('ROLE_USER')">Pedidos</a>
+                <a th:href="@{/carrito}" sec:authorize="hasRole('ROLE_USER')">Carrito</a>
+                <a th:href="@{/usuarios}" sec:authorize="hasRole('ROLE_ADMIN')">Usuarios</a>
+
+                <div>
+                    <p sec:authorize="isAuthenticated()" th:text="${#authentication.getName()}"></p>
+                    <a th:href="@{/login}" class="login" sec:authorize="!isAuthenticated()">Iniciar sesión</a>
+                    <a th:href="@{/register}" class="register" sec:authorize="!isAuthenticated()">Registrarse</a>
+                    <a th:href="@{/logout}" class="register" sec:authorize="isAuthenticated()">Salir</a>
+                </div>
+            </nav>
+        </header>
+    </body>
+</html>

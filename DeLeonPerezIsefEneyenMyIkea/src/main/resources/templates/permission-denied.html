@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/css/header.css">
+        <title>Permiso denegado</title>
+    </head>
+    <style>
+        .error
+        {
+        height: 80vh;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        }
+        .error div{
+        text-align: center;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #f2f2f2;
+        width: 50vw;
+        color: lightcoral;
+        }
+    </style>
+
+    <body>
+    <div th:replace="~{fragments/header::header}"></div>
+
+    <div class="error">
+        <div>
+            <h1>Usted no tiene permisos para acceder a esta página</h1>
+        </div>
+    </div>
+    </body>
+</html>

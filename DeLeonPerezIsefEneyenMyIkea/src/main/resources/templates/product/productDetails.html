@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/atras.css">
+        <title>Detalles</title>
+        <style>
+            h1 {
+                margin-left: 50px;
+            }
+
+            ul
+            {
+                margin-left: 50px;
+            }
+
+            li
+            {
+                margin-bottom: 5px;
+            }
+
+            ul li:last-child
+            {
+                list-style-type:none;
+            }
+        </style>
+    </head>
+    <body>
+        <div th:replace="~{fragments/header::header}"></div>
+
+        <h1>Detalles</h1>
+
+        <ul>
+            <li>Id: <span th:text="${product.id}"></span></li>
+            <li>Nombre: <span th:text="${product.productName}"></span></li>
+            <li>Precio: <span th:text="${product.productPrice}"></span></li>
+            <li>Stock: <span th:text="${product.productStock}"></span></li>
+            <li>Municipio: <span th:text="${product.idMunicipio.nombre}"></span></li>
+            <li>Provincia: <span th:text="${product.idMunicipio.idProvincia.nombre}"></span></li>
+            <li>Imagen:</li>
+            <li><img th:src="'/images/' + ${product.productPicture}" alt="Imagen del producto"></li>
+        </ul>
+
+        <a class="atras" th:href="@{/productos}"><- Volver al listado de productos</a>
+    </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/css/header.css">
+        <title>MyIkea</title>
+        <style>
+            .welcome-message
+            {
+                height: 80vh;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .welcome-message div{
+                text-align: center;
+                padding: 20px;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                background-color: #f2f2f2;
+                width: 50vw;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div th:replace="~{fragments/header::header}"></div>
+
+        <div class="welcome-message">
+            <div>
+                <h1>Bienvenido a MyIkea</h1>
+                <p>Gracias por visitarnos.</p>
+            </div>
+        </div>
+    </body>
+</html>

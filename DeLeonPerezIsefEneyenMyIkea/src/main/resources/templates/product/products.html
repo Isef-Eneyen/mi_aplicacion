@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/css/header.css">
+        <title>Productos</title>
+        <style>
+            .tabla {
+                display: flex;
+                justify-content: center;
+                border-collapse: collapse;
+                margin: 20px 50px 0 50px;
+            }
+
+            table {
+                width: 100%;
+            }
+
+            tr {
+                display: flex;
+                justify-content: space-between;
+                border-bottom: 1px solid #ddd;
+                padding: 10px 0;
+            }
+
+            th {
+                background-color: #3498db;
+                color: #fff;
+                padding: 10px;
+                text-align: left;
+                flex-basis: 20%;
+            }
+
+            td {
+                padding: 10px;
+                flex-basis: 20%;
+            }
+
+            td img {
+                height: 80px;
+            }
+
+            .products:hover {
+                background-color: #dff9fb;
+            }
+
+            .details {
+                display: inline-block;
+                width: 30%;
+                padding: 10px;
+                text-decoration: none;
+                color: #4caf50;
+                background-color: #fff;
+                border: 2px solid #4caf50;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            .details:hover {
+                background-color: #45a049;
+                border: 2px solid #45a049;
+                color: #fff;
+            }
+
+            .buy {
+                display: inline-block;
+                width: 30%;
+                margin-left: 10px;
+                padding: 10px;
+                text-decoration: none;
+                color: #00fff6;
+                background-color: #fff;
+                border: 2px solid #00fff6;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            .buy:hover {
+                background-color: #00fff6;
+                color:white;
+            }
+
+            .edit {
+                display: inline-block;
+                width: 30%;
+                margin-left: 10px;
+                padding: 10px;
+                text-decoration: none;
+                color: gray;
+                background-color: #fff;
+                border: 2px solid gray;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            .edit:hover {
+                background-color: gray;
+                color:white;
+            }
+
+            .eliminar {
+                display: inline-block;
+                width: 30%;
+                margin-left: 10px;
+                padding: 10px;
+                text-decoration: none;
+                color: red;
+                background-color: #fff;
+                border: 2px solid red;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            .eliminar:hover {
+                background-color: red;
+                color:white;
+            }
+
+            .create {
+                margin-left: 50px;
+            }
+
+            h1 {
+                margin-left: 50px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div th:replace="~{fragments/header::header}"></div>
+
+        <h1>Listado de Productos</h1>
+        <a class="create" th:href="@{/productos/create}">Crear nuevo producto</a>
+        <div class="tabla">
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Municipio</th>
+                    <th>Provincia</th>
+                    <th>Imagen</th>
+                    <th>Acciones</th>
+                </tr>
+
+                <tr class="products" th:each="producto : ${productos}">
+                    <td><p th:text="${producto.id}"></p></td>
+                    <td><p th:text="${producto.productName}"></p></td>
+                    <td><p th:text="${producto.productPrice}"></p></td>
+                    <td><p th:text="${producto.productStock}"></p></td>
+                    <td><p th:text="${producto.idMunicipio.nombre}"></p></td>
+                    <td><p th:text="${producto.idMunicipio.idProvincia.nombre}"></p></td>
+                    <td><img th:src="'/images/' + ${producto.productPicture}" alt="Imagen del producto"></td>
+                    <td>
+                        <a class="details" th:href="@{/productos/detalles/{id}(id=${producto.id})}">Detalles</a>
+                        <a class="buy" th:href="@{/carrito/añadir/{id}(id=${producto.id})}" sec:authorize="hasRole('ROLE_USER')">Comprar</a>
+                        <a class="edit" th:href="@{/productos/editar/{id}(id=${producto.id})}" sec:authorize="!hasRole('ROLE_USER')">editar</a>
+                        <a class="eliminar" th:href="@{/productos/eliminar/{id}(id=${producto.id})}" sec:authorize="!hasRole('ROLE_USER')">eliminar</a>
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
